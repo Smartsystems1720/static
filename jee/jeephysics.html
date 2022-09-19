@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JEE Physics Electro magnetic induction</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+p { font-size:30px;
+}
+
+</style>
+</head>
+<body>
+	<div class="container-fluid p-3 bg-primary text-white text-center">
+		<h1>JEE Physics Electro magnetic induction</h1>
+	</div>
+	<!-- <h2>Important points to remember</h2>
+	<img src="electromagneticinduction.png"/>   -->
+	<form id="questionform" name="questionform">
+		<div class="container mt-5">
+			<div class="row">
+				<h1 id="heading"></h1>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<p id="question"></p>
+				</div>
+			</div>
+			<div class="row">
+				<img id="questionimg" src=""/>
+			</div>
+			<div class="row">
+				<div class="col-sm-1">
+					<p>Answer</p>
+				</div>
+				<div class="col-sm-1">
+					<select id="answertxt" style="height:50px;width:50px">
+						<option>a</option>
+						<option>b</option>
+						<option>c</option>
+						<option>d</option>
+					</select>
+				</div>
+			</div>
+			<div class="row">
+				<p id="error" style="color:red;">
+				</p>
+			</div>
+			<div class="row">
+				<p id="correct" style="color:green;display:none;">
+				</p>
+				<img style="display:none;" id="correctimg" src=""/>
+				<p id="correct1" style="color:green;display:none;">Correct answer. Well done
+				</p>
+			</div>
+			<div class="row">
+				<div class="col-sm-8">
+					<input type="button" class="btn-lg btn-success" value="Submit" onclick="check();">
+				</div>
+				<div class="col-sm-4" id="next" style="display:none;">
+					<input type="button" class="btn-lg btn-primary" value="Previous" onclick="prev();">  
+					<input type="button" class="btn-lg btn-primary" value="Next" onclick="next();">
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="inputtxt" class="txt">
+		<input type="hidden" value="1" id="rate">
+		<input type="hidden" value="1" id="pitch">
+		<select style="display:none;">
+		</select>
+		
+	</form>
+<script>
+const params = new URLSearchParams(window.location.search)
+var page = params.get('page');
+var questions = ["Choose the correct answer|ques1.png|b|ans1.png",
+"Choose the correct answer|ques2.png|a|ans2.png",
+"Choose the correct answer|ques3.png|a|ans3.png",
+"Choose the correct answer|ques4.png|d|ans4.png",
+"Choose the correct answer|ques5.png|c|ans5.png",
+"Choose the correct answer|ques6.png|c|ans6.png",
+"Choose the correct answer|ques7.png|b|ans7.png",
+"Choose the correct answer|ques8.png|d|ans8.png",
+"Choose the correct answer|ques9.png|c|ans9.png",
+"Choose the correct answer|ques10.png|b|ans10.png",
+"Choose the correct answer|ques11.png|c|ans11.png",
+"Choose the correct answer|ques12.png|c|ans12.png",
+"Choose the correct answer|ques13.png|c|ans13.png",
+"Choose the correct answer|ques14.png|a|ans14.png",
+"Choose the correct answer|ques15.png|d|ans15.png"];
+
+
+
+
+let quesLength = questions.length;
+if (page == null || page == '') {
+	page = 0;
+}
+
+if (page >= quesLength) {
+	window.location.href="last.html";
+}
+
+for (let i = 0; i < quesLength; i++) {
+	const myArray = questions[i].split("|");
+	document.getElementById("heading").innerHTML = myArray[0];
+	if (myArray[0] == 'Choose the correct answer') {
+		document.getElementById("questionimg").src = myArray[1];
+		document.getElementById("correct").innerHTML  = myArray[2];
+		document.getElementById("correctimg").src = myArray[3];
+	}
+	if (i == page) {
+		page = parseInt(page) + 1;
+		break;
+	} else {
+		continue;
+	}
+}
+function check() {
+
+	var answer = document.getElementById("correct").innerHTML;
+	
+	if (document.getElementById("heading").innerHTML == 'Choose the correct answer') {
+		var wrong = true;
+		if (document.getElementById("answertxt").value == answer) {
+			wrong = false;
+		//	document.getElementById("correct").style.display="block";
+			document.getElementById("correct1").style.display="block";
+			document.getElementById("correctimg").style.display="block";
+			document.getElementById("inputtxt").value = answer + ". Correct answer. Well Done";
+			document.getElementById("error").innerHTML = "";
+			document.getElementById("next").style.display="block";
+		}
+		if (wrong) {
+			document.getElementById("inputtxt").value = "Wrong answer";
+			document.getElementById("error").innerHTML = "Wrong answer";
+			document.getElementById("next").style.display="none";
+		//	document.getElementById("correct").style.display="none";
+			document.getElementById("correct1").style.display="none";
+			document.getElementById("correctimg").style.display="none";
+		}
+	}
+	
+	return false;
+}
+function next() {
+	window.location.href="jeephysics.html?page=" + page;
+}
+function prev() {
+	if (page > 0) {
+		page = parseInt(page) - 2;
+		if (page < 0) {
+			page = 0;
+		}
+	}
+	window.location.href="jeephysics.html?page=" + page;
+}
+</script>
+</body>
+</html>
